@@ -1,0 +1,14 @@
+D:\Git\C#\repos\TCP_Beta_Right\Client\ConsoleApp1\ConsoleApp1\bin\Debug\net6.0\Client.exe
+D:\Git\C#\repos\TCP_Beta_Right\Client\ConsoleApp1\ConsoleApp1\bin\Debug\net6.0\Client.deps.json
+D:\Git\C#\repos\TCP_Beta_Right\Client\ConsoleApp1\ConsoleApp1\bin\Debug\net6.0\Client.runtimeconfig.json
+D:\Git\C#\repos\TCP_Beta_Right\Client\ConsoleApp1\ConsoleApp1\bin\Debug\net6.0\Client.dll
+D:\Git\C#\repos\TCP_Beta_Right\Client\ConsoleApp1\ConsoleApp1\bin\Debug\net6.0\ref\Client.dll
+D:\Git\C#\repos\TCP_Beta_Right\Client\ConsoleApp1\ConsoleApp1\bin\Debug\net6.0\Client.pdb
+D:\Git\C#\repos\TCP_Beta_Right\Client\ConsoleApp1\ConsoleApp1\obj\Debug\net6.0\Client.GeneratedMSBuildEditorConfig.editorconfig
+D:\Git\C#\repos\TCP_Beta_Right\Client\ConsoleApp1\ConsoleApp1\obj\Debug\net6.0\Client.AssemblyInfoInputs.cache
+D:\Git\C#\repos\TCP_Beta_Right\Client\ConsoleApp1\ConsoleApp1\obj\Debug\net6.0\Client.AssemblyInfo.cs
+D:\Git\C#\repos\TCP_Beta_Right\Client\ConsoleApp1\ConsoleApp1\obj\Debug\net6.0\Client.csproj.CoreCompileInputs.cache
+D:\Git\C#\repos\TCP_Beta_Right\Client\ConsoleApp1\ConsoleApp1\obj\Debug\net6.0\Client.dll
+D:\Git\C#\repos\TCP_Beta_Right\Client\ConsoleApp1\ConsoleApp1\obj\Debug\net6.0\ref\Client.dll
+D:\Git\C#\repos\TCP_Beta_Right\Client\ConsoleApp1\ConsoleApp1\obj\Debug\net6.0\Client.pdb
+D:\Git\C#\repos\TCP_Beta_Right\Client\ConsoleApp1\ConsoleApp1\obj\Debug\net6.0\Client.genruntimeconfig.cache
