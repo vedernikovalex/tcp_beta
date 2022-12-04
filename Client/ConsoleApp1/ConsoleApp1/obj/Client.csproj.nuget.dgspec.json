@@ -1,27 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Git\\C#\\repos\\TCP_Beta_Right\\Client\\ConsoleApp1\\ConsoleApp1\\Client.csproj": {}
+    "/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/ConsoleApp1/Client.csproj": {}
   },
   "projects": {
-    "D:\\Git\\C#\\repos\\TCP_Beta_Right\\Client\\ConsoleApp1\\ConsoleApp1\\Client.csproj": {
+    "/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/ConsoleApp1/Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Git\\C#\\repos\\TCP_Beta_Right\\Client\\ConsoleApp1\\ConsoleApp1\\Client.csproj",
+        "projectUniqueName": "/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/ConsoleApp1/Client.csproj",
         "projectName": "Client",
-        "projectPath": "D:\\Git\\C#\\repos\\TCP_Beta_Right\\Client\\ConsoleApp1\\ConsoleApp1\\Client.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "D:\\Git\\C#\\repos\\TCP_Beta_Right\\Client\\ConsoleApp1\\ConsoleApp1\\obj\\",
+        "projectPath": "/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/ConsoleApp1/Client.csproj",
+        "packagesPath": "/Users/admin/.nuget/packages/",
+        "outputPath": "/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/ConsoleApp1/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/admin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,7 +44,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -54,7 +54,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
         }
       }
     }

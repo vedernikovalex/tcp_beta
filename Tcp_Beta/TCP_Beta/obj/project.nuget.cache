@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+cbatHNcGKA0n8VdWPLI5jBePquuLf0zHamaOLsTOrguvER7jHJOz7PY4d4UIqGsK8fuVAtsC7PxE6I+ZAen6g==",
+  "dgSpecHash": "RW6YQElxo06n4paNE05EDFcXnt93Q+HBxQG0eFNE3YdXEoW9ioIJ1rTs+5vif1BGelFWTDEeLkdggb+o9XU1Tw==",
   "success": true,
-  "projectFilePath": "D:\\Git\\C#\\repos\\TCP_Beta_Right\\Tcp_Beta\\TCP_Beta\\TCP_Beta.csproj",
+  "projectFilePath": "/Users/admin/vs2022/repos/Tcp/tcp_beta/Tcp_Beta/TCP_Beta/TCP_Beta.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8X+vi9PlJheUObjHiBfSHOJ8eXNoVjOo0g7qlNTPm29Uapln/uQWAaUfk2brq/soAs/0b3INzUuwesvEx4HQ0w==",
+  "dgSpecHash": "WBvlkZc17nwQscSqMUI+5VTCYvWqfLl5EgmJ4W0a5ojXt5TDSmT45JoO1wmXGnldKaJ3mgehEFIf49GaSBC73w==",
   "success": true,
-  "projectFilePath": "D:\\Git\\C#\\repos\\TCP_Beta_Right\\Client\\ConsoleApp1\\ConsoleApp1\\Client.csproj",
+  "projectFilePath": "/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/ConsoleApp1/Client.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
