@@ -22,7 +22,7 @@ namespace Client
             Console.WriteLine("connected!");
             NetworkStream ns = tcpClient.GetStream();
 
-            Thread thread = new Thread(o => ReceiveData((TcpClient)o));
+            Thread thread = new Thread(o => Receiver.ReceiveData((TcpClient)o));
             thread.Start(tcpClient);
 
             string s;
@@ -32,7 +32,7 @@ namespace Client
                 {
                     if (Regex.IsMatch(s, "^[a-zA-Z]"))
                     {
-                        (string message, string stringKey) = EncryptOTP(s);
+                        (string message, string stringKey) = Encrypt.EncryptXOR(s);
 
                         byte[] buffer = Encoding.ASCII.GetBytes(message+";"+stringKey);
                         ns.Write(buffer, 0, buffer.Length);
@@ -57,42 +57,8 @@ namespace Client
             Console.ReadKey();
         }
 
-        static void ReceiveData(TcpClient client)
-        {
-            NetworkStream ns = client.GetStream();
-            byte[] receivedBytes = new byte[1024];
-            int byte_count;
 
-            while ((byte_count = ns.Read(receivedBytes, 0, receivedBytes.Length)) > 0)
-            {
-                string message = Encoding.ASCII.GetString(receivedBytes, 0, byte_count);
-                Console.WriteLine("BUFFER: " + message);
-                string[] message_key = message.Split(';');
-                string decryptResult = DecryptOTP(message_key[0], message_key[1]);
-                Console.WriteLine(decryptResult);
-            }
-        }
-        
-        static int AlphabetArrayRangeExtender(int index)
-        {
-            int positiveCount = 26;
-            //int negativeCount = -26;
-            while (index > positiveCount)
-            {
-                if (index > positiveCount)
-                {
-                    index -= positiveCount;
-                }
-                /*
-                if (index < negativeCount)
-                {
-                    index -= negativeCount;
-                }
-                */
-            }
-            return index;
-        }
-
+        /*
         static (string, string) EncryptOTP(string input)
         {
             string message = "";
@@ -123,27 +89,13 @@ namespace Client
                 int key_int = char.ToUpper(tempKey) - 65;
                 Console.WriteLine("Msg before" + message_int);
                 Console.WriteLine("Key before" + key_int);
-                if (message_int < key_int)
-                {
-                    step = key_int - message_int;
-                    message_int = 26;
-                    key_int = 26 - step;
-                }
-                /*
-                if (message_int > 26)
-                {
-                    step = message_int - 26;
-                    message_int = message_int - 26 + step;
-                    key_int = key_int - 26 + step;
-                }
-                */
-                Console.WriteLine("Msg after"+message_int);
-                Console.WriteLine("Key after"+key_int);
                 int result_int = message_int - key_int;
+                //result_int = result_int < 0 ? result_int * -1 : result_int;
                 Console.WriteLine(result_int);
                 message += chars[result_int];
             }
             return message;
         }
+        */
     }
 }
