@@ -7,95 +7,72 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
+using System.Configuration;
+using System.Collections.Specialized;
 
 namespace Client
 {
     class Program
     {
-        static string ip_address = "127.0.0.1";
-        static int port = 7777;
+        //TODO config file
+        static string ip_address = ConfigurationManager.AppSettings.Get("ipAddress");
+        static int port = Int32.Parse(ConfigurationManager.AppSettings.Get("port"));
+        static bool username = false;
 
         static void Main(string[] args)
         {
             TcpClient tcpClient = new TcpClient();
-            tcpClient.Connect(ip_address, port);
-            Console.WriteLine("connected!");
-            NetworkStream ns = tcpClient.GetStream();
-
-            Thread thread = new Thread(o => Receiver.ReceiveData((TcpClient)o));
-            thread.Start(tcpClient);
-
-            string s;
-            while (!string.IsNullOrEmpty((s = Console.ReadLine())))
+            try
             {
-                try
+                tcpClient.Connect(ip_address, port);
+                Console.WriteLine("Server found!");
+                Console.WriteLine("Connected to "+ip_address+ " with port "+port+"!");
+                NetworkStream ns = tcpClient.GetStream();
+
+                Thread thread = new Thread(o => Receiver.ReceiveData((TcpClient)o));
+                thread.Start(tcpClient);
+
+                string s;
+                while (!string.IsNullOrEmpty((s = Console.ReadLine())))
                 {
-                    if (Regex.IsMatch(s, "^[a-zA-Z]"))
+                    if (!username)
                     {
-                        (string message, string stringKey) = Encrypt.EncryptXOR(s);
-
-                        byte[] buffer = Encoding.ASCII.GetBytes(message+";"+stringKey);
-                        ns.Write(buffer, 0, buffer.Length);
+                        byte[] usernameBuffer = Encoding.ASCII.GetBytes(s);
+                        ns.Write(usernameBuffer, 0, usernameBuffer.Length);
+                        username = true;
                     }
-                    else
+                    try
                     {
-                        throw new IndexOutOfRangeException("This program accepts english alphabetic characters only!");
+                        if (Regex.IsMatch(s, "^[a-zA-Z]"))
+                        {
+                            (string message, int pointer) = Crypt.EncryptXOR(s);
+
+                            byte[] buffer = Encoding.ASCII.GetBytes(message + "];[" + pointer);
+                            ns.Write(buffer, 0, buffer.Length);
+                        }
+                        else
+                        {
+                            throw new IndexOutOfRangeException("This program accepts english alphabetic characters only!");
+                        }
                     }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        Console.WriteLine(e);
+                    }
+
                 }
-                catch (IndexOutOfRangeException e)
-                {
-                    Console.WriteLine(e);
-                }
+                tcpClient.Client.Shutdown(SocketShutdown.Send);
+                thread.Join();
+                ns.Close();
+                tcpClient.Close();
+                Console.WriteLine("disconnected!");
+                Console.ReadKey();
             }
-            
-
-            tcpClient.Client.Shutdown(SocketShutdown.Send);
-            thread.Join();
-            ns.Close();
-            tcpClient.Close();
-            Console.WriteLine("disconnected!");
-            Console.ReadKey();
-        }
-
-
-        /*
-        static (string, string) EncryptOTP(string input)
-        {
-            string message = "";
-            string stringKey = "";
-            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            for (int i = 0; i < input.Length; i++)
+            catch (SocketException e)
             {
-                int key = RandomNumberGenerator.GetInt32(26);
-                char temp = input[i];
-                int index = char.ToUpper(temp) - 65;
-                int cipherNum = index + key;
-                message += chars[AlphabetArrayRangeExtender(cipherNum)];
-                stringKey += chars[key];
+                Console.WriteLine("server could not be found!");
+                //TODO actions
             }
-            return (message, stringKey);
         }
-
-        static string DecryptOTP(string input, string key)
-        {
-            string message = "";
-            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            int step = 0;
-            for (int i = 0; i < input.Length; i++)
-            {
-                char temp = input[i];
-                char tempKey = key[i];
-                int message_int = char.ToUpper(temp) - 65;
-                int key_int = char.ToUpper(tempKey) - 65;
-                Console.WriteLine("Msg before" + message_int);
-                Console.WriteLine("Key before" + key_int);
-                int result_int = message_int - key_int;
-                //result_int = result_int < 0 ? result_int * -1 : result_int;
-                Console.WriteLine(result_int);
-                message += chars[result_int];
-            }
-            return message;
-        }
-        */
     }
 }

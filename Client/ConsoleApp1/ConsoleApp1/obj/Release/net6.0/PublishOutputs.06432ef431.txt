@@ -1,0 +1,17 @@
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/Client
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/Client.dll
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/Client.deps.json
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/Client.runtimeconfig.json
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/Client.dll.config
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/Client.pdb
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/HtmlAgilityPack.dll
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/Microsoft.Win32.SystemEvents.dll
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/System.Configuration.ConfigurationManager.dll
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/System.Drawing.Common.dll
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/System.Security.Cryptography.ProtectedData.dll
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/System.Security.Permissions.dll
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/System.Windows.Extensions.dll
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/runtimes/win/lib/net6.0/System.Drawing.Common.dll
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.dll
+/Users/admin/vs2022/repos/Tcp/tcp_beta/Client/ConsoleApp1/Build/runtimes/win/lib/net6.0/System.Windows.Extensions.dll

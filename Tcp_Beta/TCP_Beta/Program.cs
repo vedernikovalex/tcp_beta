@@ -10,34 +10,52 @@ namespace TCP_Beta
 {
     class Program
     {
-        static Dictionary<int, TcpClient> client_list = new Dictionary<int, TcpClient>();
         static object locker = new object();
 
+        static List<User> users_list = new List<User>();
+        static List<Message> message_list = new List<Message>();
+        static Dictionary<string, DateTime> loginHistory = new Dictionary<string, DateTime>();
+        
         static void Main(string[] args)
         {
-            int count = 1;
-
             TcpListener server = new TcpListener(IPAddress.Any, 7777);
             server.Start();
 
             while (true)
             {
                 TcpClient client = server.AcceptTcpClient();
-                lock (locker) client_list.Add(count, client);
-                Console.WriteLine("Connection established!");
+                string username = String.Empty;
+                //TODO unique username to user, only one username can be logged in
+                while (username == String.Empty)
+                {
+                    NetworkStream stream = client.GetStream();
+                    ServerWrite("USERNAME? ~ ", stream);
+                    //TODO ??? missing -> if working = fine
+                    byte[] receiveAuthorize = new byte[1024];
+                    int byte_count = stream.Read(receiveAuthorize, 0, receiveAuthorize.Length);
+                    if (byte_count > 0)
+                    {
+                        string message = Encoding.ASCII.GetString(receiveAuthorize, 0, byte_count);
+                        username = message;
+                    }
+                    //TODO handle empty username assign
+                }
+                User currentUser = new User(username, client);
+                lock (locker) users_list.Add(currentUser);
+                Console.WriteLine("User "+ username + " just connected!");
 
-                Thread thread = new Thread(handle);
-                thread.Start(count);
-                count++;
+                Thread thread = new Thread(Handle);
+                //Thread timeout = new Thread(TimeOut);
+                thread.Start(currentUser);
             }
-
         }
 
-        public static void handle(object obj)
+        public static void Handle(object obj)
         {
-            int id = (int)obj;
-            TcpClient client;
-            lock (locker) client = client_list[id];
+            User user = (User)obj;
+            TcpClient client = user.Client;
+
+            RetrieveHistory(user);
 
             while (true)
             {
@@ -51,26 +69,72 @@ namespace TCP_Beta
                 }
 
                 string data = Encoding.ASCII.GetString(buffer, 0, byte_count);
-                broadcast(data);
-                Console.WriteLine(data);
+                broadcast(user.Username, data, user);
             }
+            lock (locker) users_list.Remove(user);
 
-            lock (locker) client_list.Remove(id);
+            if (loginHistory.ContainsKey(user.Username))
+            {
+                loginHistory[user.Username] = DateTime.Now;
+            }
+            loginHistory.Add(user.Username, DateTime.Now);
+
+            //TODO print user disconnected to both client and server
+
             client.Client.Shutdown(SocketShutdown.Both);
             client.Close();
         }
-
-        public static void broadcast(string data)
+        /*
+        public static void TimeOut(object obj)
         {
-            byte[] buffer = Encoding.ASCII.GetBytes(data + Environment.NewLine);
+
+        }
+        */
+        public static void broadcast(string username, string data, User currentClient)
+        {
+            byte[] buffer = Encoding.ASCII.GetBytes(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "];["+username+"];["+data + Environment.NewLine);
+            lock (locker) message_list.Add(new Message(DateTime.Now, username, data));
             lock (locker)
             {
-                foreach(TcpClient client in client_list.Values)
+                foreach (User user in users_list)
                 {
-                    NetworkStream stream = client.GetStream();
-                    stream.Write(buffer, 0, buffer.Length);
+                    if (user != currentClient)
+                    {
+                        NetworkStream stream = user.Client.GetStream();
+                        stream.Write(buffer, 0, buffer.Length);
+                    }
                 }
             }
+        }
+
+        public static void RetrieveHistory(User user)
+        {
+            if (loginHistory.ContainsKey(user.Username))
+            {
+                DateTime lastLogin = loginHistory[user.Username];
+                NetworkStream stream = user.Client.GetStream();
+                for (int i = 0; i < message_list.Count; i++)
+                {
+                    int comparison = DateTime.Compare(lastLogin, message_list[i].Time);
+                    if (comparison < 0)
+                    {
+                        Console.WriteLine(message_list[i]);
+                        byte[] buffer = Encoding.ASCII.GetBytes(message_list[i].Time + "];[" + message_list[i].Username + "];[" + message_list[i].CurrentMessage + Environment.NewLine);
+                        stream.Write(buffer, 0, buffer.Length);
+                    }
+                }
+            }
+        }
+
+        public static void ServerWrite(string message, NetworkStream stream)
+        {
+            byte[] serverByte = Encoding.UTF8.GetBytes(message);
+            stream.Write(serverByte);
+        }
+
+        public static void ServerCommands()
+        {
+            //TODO accept user commands to handle on server side
         }
     }
 }
