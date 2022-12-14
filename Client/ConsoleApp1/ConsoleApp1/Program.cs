@@ -14,7 +14,6 @@ namespace Client
 {
     class Program
     {
-        //TODO config file
         static string ip_address = ConfigurationManager.AppSettings.Get("ipAddress");
         static int port = Int32.Parse(ConfigurationManager.AppSettings.Get("port"));
         static bool username = false;

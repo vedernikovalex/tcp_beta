@@ -24,30 +24,45 @@ namespace TCP_Beta
             while (true)
             {
                 TcpClient client = server.AcceptTcpClient();
-                string username = String.Empty;
-                //TODO unique username to user, only one username can be logged in
-                while (username == String.Empty)
+                NetworkStream stream = client.GetStream();
+                User currentUser = null;
+                while (currentUser == null)
                 {
-                    NetworkStream stream = client.GetStream();
-                    ServerWrite("USERNAME? ~ ", stream);
-                    //TODO ??? missing -> if working = fine
-                    byte[] receiveAuthorize = new byte[1024];
-                    int byte_count = stream.Read(receiveAuthorize, 0, receiveAuthorize.Length);
-                    if (byte_count > 0)
-                    {
-                        string message = Encoding.ASCII.GetString(receiveAuthorize, 0, byte_count);
-                        username = message;
-                    }
-                    //TODO handle empty username assign
+                    currentUser = UsernameHandle(stream, client);
                 }
-                User currentUser = new User(username, client);
-                lock (locker) users_list.Add(currentUser);
-                Console.WriteLine("User "+ username + " just connected!");
+                Console.WriteLine("User "+ currentUser.Username + " just connected!");
 
                 Thread thread = new Thread(Handle);
                 //Thread timeout = new Thread(TimeOut);
                 thread.Start(currentUser);
             }
+        }
+
+        public static User UsernameHandle(NetworkStream stream, TcpClient client)
+        {
+            //TODO unique username to user, only one username can be logged in
+            //TODO ??? missing -> if working = fine
+            string username = String.Empty;
+            while (username == String.Empty)
+            {
+                ServerWrite("USERNAME? ~ ", stream);
+                byte[] receiveAuthorize = new byte[1024];
+                int byte_count = stream.Read(receiveAuthorize, 0, receiveAuthorize.Length);
+                if (byte_count <= 0)
+                {
+                    ServerWrite("!!USERNAME CANNOT BE EMPTY!! ~ ", stream);
+                    stream.Position = 0;
+                }
+                else
+                {
+                    string input = Encoding.ASCII.GetString(receiveAuthorize, 0, byte_count);
+                    username = input;
+                }
+            }
+            //TODO handle empty username assign
+            User currentUser = new User(username, client);
+            lock (locker) users_list.Add(currentUser);
+            return currentUser;
         }
 
         public static void Handle(object obj)
@@ -61,6 +76,7 @@ namespace TCP_Beta
             {
                 NetworkStream stream = client.GetStream();
                 byte[] buffer = new byte[1024];
+                //TODO handle all users disconnectance
                 int byte_count = stream.Read(buffer, 0, buffer.Length);
 
                 if (byte_count == 0)
