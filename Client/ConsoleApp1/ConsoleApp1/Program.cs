@@ -21,6 +21,7 @@ namespace Client
         static void Main(string[] args)
         {
             TcpClient tcpClient = new TcpClient();
+            Tuple<string, int> messages;
             try
             {
                 tcpClient.Connect(ip_address, port);
@@ -32,7 +33,7 @@ namespace Client
                 thread.Start(tcpClient);
 
                 string s;
-                while (!string.IsNullOrEmpty((s = Console.ReadLine())))
+                while (!string.IsNullOrEmpty(s = Console.ReadLine()))
                 {
                     if (!username)
                     {
@@ -42,17 +43,18 @@ namespace Client
                     }
                     try
                     {
-                        if (Regex.IsMatch(s, "^[a-zA-Z]"))
+                        //if (Regex.IsMatch(s, "^[a-zA-Z]"))
+                        //TODO -> find a way to simulate network failure
+                        if (s == "DROP")
                         {
-                            (string message, int pointer) = Crypt.EncryptXOR(s);
+                            Console.WriteLine("string");
+                            NetworkController.Disable();
+                        }
+                        (string message, int pointer) = Crypt.EncryptXOR(s);
 
-                            byte[] buffer = Encoding.ASCII.GetBytes(message + "];[" + pointer);
-                            ns.Write(buffer, 0, buffer.Length);
-                        }
-                        else
-                        {
-                            throw new IndexOutOfRangeException("This program accepts english alphabetic characters only!");
-                        }
+                        byte[] buffer = Encoding.ASCII.GetBytes(message + "];[" + pointer);
+                        ns.Write(buffer, 0, buffer.Length);
+  
                     }
                     catch (IndexOutOfRangeException e)
                     {
@@ -64,7 +66,6 @@ namespace Client
                 thread.Join();
                 ns.Close();
                 tcpClient.Close();
-                Console.WriteLine("disconnected!");
                 Console.ReadKey();
             }
             catch (SocketException e)

@@ -26,3 +26,6 @@ D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\obj\x64\Test\net6.0\Clie
 D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\obj\x64\Test\net6.0\ref\Client.dll
 D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\obj\x64\Test\net6.0\Client.pdb
 D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\obj\x64\Test\net6.0\Client.genruntimeconfig.cache
+D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\bin\x64\Test\net6.0\System.CodeDom.dll
+D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\bin\x64\Test\net6.0\System.Management.dll
+D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\bin\x64\Test\net6.0\runtimes\win\lib\net6.0\System.Management.dll
