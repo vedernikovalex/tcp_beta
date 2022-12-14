@@ -43,6 +43,7 @@ namespace TCP_Beta
             //TODO unique username to user, only one username can be logged in
             //TODO ??? missing -> if working = fine
             string username = String.Empty;
+            bool taken = false;
             while (username == String.Empty)
             {
                 ServerWrite("USERNAME? ~ ", stream);
@@ -50,13 +51,24 @@ namespace TCP_Beta
                 int byte_count = stream.Read(receiveAuthorize, 0, receiveAuthorize.Length);
                 if (byte_count <= 0)
                 {
-                    ServerWrite("!!USERNAME CANNOT BE EMPTY!! ~ ", stream);
-                    stream.Position = 0;
+                    ServerWrite("!!USERNAME CANNOT BE EMPTY!!", stream);
+                    //stream.Position = 0;
                 }
                 else
                 {
                     string input = Encoding.ASCII.GetString(receiveAuthorize, 0, byte_count);
-                    username = input;
+                    for (int i = 0; i < users_list.Count; i++)
+                    {
+                        if (users_list[i].Username == input)
+                        {
+                            ServerWrite("!!USER ALREADY EXISTS ON THIS SERVER!!", stream);
+                            taken = true;
+                        }
+                    }
+                    if (!taken)
+                    {
+                        username = input;
+                    }
                 }
             }
             //TODO handle empty username assign
@@ -146,6 +158,8 @@ namespace TCP_Beta
         {
             byte[] serverByte = Encoding.UTF8.GetBytes(message);
             stream.Write(serverByte);
+            //if disconected before function invoke -> exception
+            //TODO hanle
         }
 
         public static void ServerCommands()
