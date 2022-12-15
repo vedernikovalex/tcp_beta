@@ -1,6 +1,9 @@
 ﻿using System;
 namespace TCP_Beta
 {
+    /// <summary>
+    /// Class MESSAGE; contains DateTime message time, string message senders username and string current message
+    /// </summary>
 	public class Message
 	{
 		private DateTime time;

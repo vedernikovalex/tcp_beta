@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Net;
+﻿using System.Text;
 using System.Net.Sockets;
-using System.Security.Cryptography;
 using System.Configuration;
-using System.Collections.Specialized;
+using CipherOTP;
 
 namespace Client
 {
@@ -49,6 +42,14 @@ namespace Client
                         {
                             Console.WriteLine("string");
                             NetworkController.Disable();
+                        }
+                        if (s == ":q")
+                        {
+                            tcpClient.Client.Shutdown(SocketShutdown.Send);
+                            thread.Join();
+                            ns.Close();
+                            tcpClient.Close();
+                            Console.ReadKey();
                         }
                         (string message, int pointer) = Crypt.EncryptXOR(s);
 

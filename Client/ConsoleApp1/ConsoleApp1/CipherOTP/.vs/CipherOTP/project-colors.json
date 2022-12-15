@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "d9a3f314-71b9-4109-bba3-4a19fbd861ec": {
+      "ProjectGuid": "d9a3f314-71b9-4109-bba3-4a19fbd861ec",
+      "DisplayName": "CipherOTP",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

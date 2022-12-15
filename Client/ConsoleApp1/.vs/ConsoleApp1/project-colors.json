@@ -5,7 +5,12 @@
       "ProjectGuid": "b3072e4f-c533-4e2e-954e-8d15c5b6bfd9",
       "DisplayName": "Client",
       "ColorIndex": 0
+    },
+    "dbc82ceb-f3e1-453b-b879-d63ad6c15d30": {
+      "ProjectGuid": "dbc82ceb-f3e1-453b-b879-d63ad6c15d30",
+      "DisplayName": "CipherOTP",
+      "ColorIndex": 1
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 2
 }

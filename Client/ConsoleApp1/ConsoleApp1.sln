@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "ConsoleApp1\Client.csproj", "{B3072E4F-C533-4E2E-954E-8D15C5B6BFD9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CipherOTP", "ConsoleApp1\CipherOTP\CipherOTP\CipherOTP.csproj", "{DBC82CEB-F3E1-453B-B879-D63AD6C15D30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{B3072E4F-C533-4E2E-954E-8D15C5B6BFD9}.Test|Any CPU.Build.0 = Test|Any CPU
 		{B3072E4F-C533-4E2E-954E-8D15C5B6BFD9}.Test|x64.ActiveCfg = Test|x64
 		{B3072E4F-C533-4E2E-954E-8D15C5B6BFD9}.Test|x64.Build.0 = Test|x64
+		{DBC82CEB-F3E1-453B-B879-D63AD6C15D30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBC82CEB-F3E1-453B-B879-D63AD6C15D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBC82CEB-F3E1-453B-B879-D63AD6C15D30}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DBC82CEB-F3E1-453B-B879-D63AD6C15D30}.Debug|x64.Build.0 = Debug|Any CPU
+		{DBC82CEB-F3E1-453B-B879-D63AD6C15D30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBC82CEB-F3E1-453B-B879-D63AD6C15D30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBC82CEB-F3E1-453B-B879-D63AD6C15D30}.Release|x64.ActiveCfg = Release|Any CPU
+		{DBC82CEB-F3E1-453B-B879-D63AD6C15D30}.Release|x64.Build.0 = Release|Any CPU
+		{DBC82CEB-F3E1-453B-B879-D63AD6C15D30}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBC82CEB-F3E1-453B-B879-D63AD6C15D30}.Test|Any CPU.Build.0 = Debug|Any CPU
+		{DBC82CEB-F3E1-453B-B879-D63AD6C15D30}.Test|x64.ActiveCfg = Debug|Any CPU
+		{DBC82CEB-F3E1-453B-B879-D63AD6C15D30}.Test|x64.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

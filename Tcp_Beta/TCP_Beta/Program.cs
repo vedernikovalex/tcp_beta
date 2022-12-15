@@ -28,9 +28,13 @@ namespace TCP_Beta
                 User currentUser = null;
                 try
                 {
-                    Thread usernameThread = new Thread(() => { currentUser = UsernameHandle(stream, client); });
-                    usernameThread.Start();
-                    usernameThread.Join();
+                    while (currentUser == null)
+                    {
+                        Thread usernameThread = new Thread(() => { currentUser = UsernameHandle(stream, client); });
+                        usernameThread.Start();
+                        usernameThread.Join();
+                    }
+
                     if (currentUser != null)
                     {
                         Console.WriteLine("User " + currentUser.Username + " just connected!");
@@ -68,38 +72,39 @@ namespace TCP_Beta
                 //          handle in thread??
                 //          dead end..
                 string username = String.Empty;
-                while (username == String.Empty)
+
+                bool taken = false;
+                ServerWrite("USERNAME? ~ ", stream);
+                byte[] receiveAuthorize = new byte[1024];
+                int byte_count = stream.Read(receiveAuthorize, 0, receiveAuthorize.Length);
+                if (byte_count <= 0)
                 {
-                    bool taken = false;
-                    ServerWrite("USERNAME? ~ ", stream);
-                    byte[] receiveAuthorize = new byte[1024];
-                    int byte_count = stream.Read(receiveAuthorize, 0, receiveAuthorize.Length);
-                    if (byte_count <= 0)
+                    ServerWrite("!!USERNAME CANNOT BE EMPTY!!\n", stream);
+                    //stream.Position = 0;
+                }
+                else
+                {
+                    string input = Encoding.ASCII.GetString(receiveAuthorize, 0, byte_count);
+                    for (int i = 0; i < users_list.Count; i++)
                     {
-                        ServerWrite("!!USERNAME CANNOT BE EMPTY!!\n", stream);
-                        //stream.Position = 0;
+                        if (users_list[i].Username == input)
+                        {
+                            ServerWrite("!!USER ALREADY EXISTS ON THIS SERVER!!\n", stream);
+                            taken = true;
+                        }
                     }
-                    else
+                    if (!taken)
                     {
-                        string input = Encoding.ASCII.GetString(receiveAuthorize, 0, byte_count);
-                        for (int i = 0; i < users_list.Count; i++)
-                        {
-                            if (users_list[i].Username == input)
-                            {
-                                ServerWrite("!!USER ALREADY EXISTS ON THIS SERVER!!\n", stream);
-                                taken = true;
-                            }
-                        }
-                        if (!taken)
-                        {
-                            username = input;
-                        }
+                        username = input;
                     }
                 }
-                //TODO handle empty username assign
-                User currentUser = new User(username, client);
-                lock (locker) users_list.Add(currentUser);
-                return currentUser;
+                if (username != String.Empty)
+                {
+                    User currentUser = new User(username, client);
+                    lock (locker) users_list.Add(currentUser);
+                    return currentUser;
+                }
+                return null;
             }
             catch (IOException e)
             {
@@ -126,10 +131,12 @@ namespace TCP_Beta
                     //TODO handle all users disconnectance
                     int byte_count = stream.Read(buffer, 0, buffer.Length);
 
+                    /*
                     if (byte_count == 0)
                     {
                         break;
                     }
+                    */
 
                     string data = Encoding.ASCII.GetString(buffer, 0, byte_count);
                     broadcast(currentUser.Username, data, currentUser);
@@ -210,6 +217,11 @@ namespace TCP_Beta
                 stream.Write(serverByte);
             }
             catch (IOException e)
+            {
+                Console.WriteLine("No active stream found!");
+                Console.WriteLine(e.Message);
+            }
+            catch (ObjectDisposedException e)
             {
                 Console.WriteLine("No active stream found!");
                 Console.WriteLine(e.Message);

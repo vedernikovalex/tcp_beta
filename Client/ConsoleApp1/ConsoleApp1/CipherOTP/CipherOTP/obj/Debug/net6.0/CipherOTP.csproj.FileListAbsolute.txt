@@ -1,0 +1,11 @@
+D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\CipherOTP\CipherOTP\bin\Debug\net6.0\CipherOTP.deps.json
+D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\CipherOTP\CipherOTP\bin\Debug\net6.0\CipherOTP.dll
+D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\CipherOTP\CipherOTP\bin\Debug\net6.0\ref\CipherOTP.dll
+D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\CipherOTP\CipherOTP\bin\Debug\net6.0\CipherOTP.pdb
+D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\CipherOTP\CipherOTP\obj\Debug\net6.0\CipherOTP.GeneratedMSBuildEditorConfig.editorconfig
+D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\CipherOTP\CipherOTP\obj\Debug\net6.0\CipherOTP.AssemblyInfoInputs.cache
+D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\CipherOTP\CipherOTP\obj\Debug\net6.0\CipherOTP.AssemblyInfo.cs
+D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\CipherOTP\CipherOTP\obj\Debug\net6.0\CipherOTP.csproj.CoreCompileInputs.cache
+D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\CipherOTP\CipherOTP\obj\Debug\net6.0\CipherOTP.dll
+D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\CipherOTP\CipherOTP\obj\Debug\net6.0\ref\CipherOTP.dll
+D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\CipherOTP\CipherOTP\obj\Debug\net6.0\CipherOTP.pdb

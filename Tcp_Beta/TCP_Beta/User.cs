@@ -3,6 +3,9 @@ using System.Net.Sockets;
 
 namespace TCP_Beta
 {
+    /// <summary>
+    /// Class of USER; contains string users username and users TcpClient client connection;
+    /// </summary>
 	public class User
 	{
 		private string username;
