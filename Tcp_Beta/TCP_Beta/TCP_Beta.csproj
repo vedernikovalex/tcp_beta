@@ -10,4 +10,10 @@
   <ItemGroup>
     <None Remove="HtmlAgilityPack" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CipherOTP">
+      <HintPath>..\..\Client\ConsoleApp1\ConsoleApp1\CipherOTP\CipherOTP\bin\Debug\net6.0\CipherOTP.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

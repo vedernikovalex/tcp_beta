@@ -73,3 +73,5 @@ D:\Git\C#\repos\tcp_beta\Tcp_Beta\TCP_Beta\obj\Debug\net6.0\ref\TCP_Beta.dll
 D:\Git\C#\repos\tcp_beta\Tcp_Beta\TCP_Beta\obj\Debug\net6.0\TCP_Beta.pdb
 D:\Git\C#\repos\tcp_beta\Tcp_Beta\TCP_Beta\obj\Debug\net6.0\TCP_Beta.genruntimeconfig.cache
 D:\Git\C#\repos\tcp_beta\Tcp_Beta\TCP_Beta\obj\Debug\net6.0\TCP_Beta.csproj.AssemblyReference.cache
+D:\Git\C#\repos\tcp_beta\Tcp_Beta\TCP_Beta\bin\Debug\net6.0\CipherOTP.dll
+D:\Git\C#\repos\tcp_beta\Tcp_Beta\TCP_Beta\obj\Debug\net6.0\TCP_Beta.csproj.CopyComplete

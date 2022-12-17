@@ -10,13 +10,11 @@ namespace Client
 	{
         public static void ReceiveData(TcpClient client)
         {
-            NetworkStream ns = client.GetStream();
-            byte[] receivedBytes = new byte[1024];
-            int byte_count;
-
-            while ((byte_count = ns.Read(receivedBytes, 0, receivedBytes.Length)) > 0)
+            StreamReader sr = new StreamReader(client.GetStream(), Encoding.UTF8);
+            string message;
+            while ((message = sr.ReadLine()) != null)
             {
-                string message = Encoding.ASCII.GetString(receivedBytes, 0, byte_count);
+                //TODO rewrite ecnryption to server side
                 if (Regex.IsMatch(message, "\\];\\["))
                 {
                     string[] message_key = message.Split("];[");

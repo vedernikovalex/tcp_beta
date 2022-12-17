@@ -15,25 +15,33 @@ namespace TCP_Beta
         static List<User> users_list = new List<User>();
         static List<Message> message_list = new List<Message>();
         static Dictionary<string, DateTime> loginHistory = new Dictionary<string, DateTime>();
-        
+        static StreamReader sr;
+        static StreamWriter sw;
+        static bool isRunning;
+
         static void Main(string[] args)
         {
             TcpListener server = new TcpListener(IPAddress.Any, 7777);
             server.Start();
+            isRunning = true;
+            Console.WriteLine("Server is running");
 
-            while (true)
+            while (isRunning)
             {
                 TcpClient client = server.AcceptTcpClient();
                 NetworkStream stream = client.GetStream();
+
                 User currentUser = null;
+
                 try
                 {
-                    while (currentUser == null)
-                    {
-                        Thread usernameThread = new Thread(() => { currentUser = UsernameHandle(stream, client); });
-                        usernameThread.Start();
-                        usernameThread.Join();
-                    }
+                    /*
+                    Thread usernameThread = new Thread(() => { currentUser = UsernameHandle(stream, client); });
+                    usernameThread.Start();
+                    usernameThread.Join();
+                    */
+
+                    currentUser = UsernameHandle(stream, client);
 
                     if (currentUser != null)
                     {
@@ -45,21 +53,19 @@ namespace TCP_Beta
                 }
                 catch (IOException e)
                 {
-                    Console.WriteLine("User aborted connection by hard shutdown!");
-                    Console.WriteLine("Error: "+e.Message + "\n");
-                    if(currentUser != null)
+                    if (currentUser != null)
                     {
                         lock (locker) users_list.Remove(currentUser);
                     }
-                    client.Client.Shutdown(SocketShutdown.Both);
-                    client.Close();
+                    Console.WriteLine("User '" + currentUser.Username + "' aborted connection by hard shutdown!");
+                    Console.WriteLine("Error: " + e.Message + "\n");
+                    UserDisconnect(currentUser);
                 }
                 catch (NullReferenceException e)
                 {
                     Console.WriteLine("Error occured in username input!");
                     Console.WriteLine("Error: " + e.Message + "\n");
-                    client.Client.Shutdown(SocketShutdown.Both);
-                    client.Close();
+                    UserDisconnect(currentUser);
                 }
             }
         }
@@ -68,49 +74,46 @@ namespace TCP_Beta
         {
             try
             {
-                //TODO -> ask username for every connected USER
-                //          handle in thread??
-                //          dead end..
                 string username = String.Empty;
-
                 bool taken = false;
-                ServerWrite("USERNAME? ~ ", stream);
-                byte[] receiveAuthorize = new byte[1024];
-                int byte_count = stream.Read(receiveAuthorize, 0, receiveAuthorize.Length);
-                if (byte_count <= 0)
+                while (username == String.Empty)
                 {
-                    ServerWrite("!!USERNAME CANNOT BE EMPTY!!\n", stream);
-                    //stream.Position = 0;
-                }
-                else
-                {
-                    string input = Encoding.ASCII.GetString(receiveAuthorize, 0, byte_count);
-                    for (int i = 0; i < users_list.Count; i++)
+                    ServerWrite("USERNAME? ~ ", client);
+                    sr = new StreamReader(stream);
+                    username = sr.ReadLine();
+
+                    if (username == null)
                     {
-                        if (users_list[i].Username == input)
+                        ServerWrite("!!USERNAME CANNOT BE EMPTY!!\n", client);
+                        username = String.Empty;
+                    }
+                    else
+                    {
+                        //string input = Encoding.ASCII.GetString(receiveAuthorize, 0, byte_count);
+                        for (int i = 0; i < users_list.Count; i++)
                         {
-                            ServerWrite("!!USER ALREADY EXISTS ON THIS SERVER!!\n", stream);
-                            taken = true;
+                            if (users_list[i].Username == username && taken == false)
+                            {
+                                ServerWrite("!!USER ALREADY EXISTS ON THIS SERVER!!\n", client);
+                                taken = true;
+                                username = String.Empty;
+                            }
                         }
                     }
-                    if (!taken)
+                    if (taken == false && username != String.Empty)
                     {
-                        username = input;
+                        User currentUser = new User(username, client);
+                        lock (locker) users_list.Add(currentUser);
+                        return currentUser;
                     }
                 }
-                if (username != String.Empty)
-                {
-                    User currentUser = new User(username, client);
-                    lock (locker) users_list.Add(currentUser);
-                    return currentUser;
-                }
                 return null;
+
             }
-            catch (IOException e)
+            catch (Exception e)
             {
-                Console.WriteLine("User aborted connection by hard shutdown!");
+                Console.WriteLine("Unknown user aborted connection by hard shutdown!");
                 Console.WriteLine("Error: "+e.Message + "\n");
-                client.Client.Shutdown(SocketShutdown.Both);
                 client.Close();
                 return null;
             }
@@ -127,33 +130,26 @@ namespace TCP_Beta
 
                 while (client.Connected)
                 {
-                    byte[] buffer = new byte[1024];
                     //TODO handle all users disconnectance
-                    int byte_count = stream.Read(buffer, 0, buffer.Length);
+                    string message = sr.ReadLine();
 
-                    /*
-                    if (byte_count == 0)
+                    if(message != null)
                     {
-                        break;
+                        if (message[0] == '!')
+                        {
+                            ServerCommands(message, currentUser);
+                        }
+                        else
+                        {
+                            broadcast(currentUser.Username, message, currentUser);
+                        }
                     }
-                    */
-
-                    string data = Encoding.ASCII.GetString(buffer, 0, byte_count);
-                    broadcast(currentUser.Username, data, currentUser);
+                    else
+                    {
+                        UserDisconnect(currentUser);
+                    }
                 }
-                lock (locker) users_list.Remove(currentUser);
-
-                if (loginHistory.ContainsKey(currentUser.Username))
-                {
-                    loginHistory[currentUser.Username] = DateTime.Now;
-                }
-                loginHistory.Add(currentUser.Username, DateTime.Now);
-
-                Console.WriteLine("User "+ currentUser.Username+" disconnected");
-                ServerWrite("!!USER "+ currentUser.Username+" DISCONNECTED!!", stream);
-
-                client.Client.Shutdown(SocketShutdown.Both);
-                client.Close();
+                
             }
             catch (IOException e)
             {
@@ -161,10 +157,8 @@ namespace TCP_Beta
                 Console.WriteLine("Error: " + e.Message+"\n");
                 if (currentUser != null)
                 {
-                    lock (locker) users_list.Remove(currentUser);
+                    UserDisconnect(currentUser);
                 }
-                client.Client.Shutdown(SocketShutdown.Both);
-                client.Close();
             }
         }
         /*
@@ -175,67 +169,108 @@ namespace TCP_Beta
         */
         public static void broadcast(string username, string data, User currentClient)
         {
-            byte[] buffer = Encoding.ASCII.GetBytes(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "];["+username+"];["+data + Environment.NewLine);
+            string message = (DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "];[" + username + "];[" + data + Environment.NewLine);
             lock (locker) message_list.Add(new Message(DateTime.Now, username, data));
-            lock (locker)
+            
+            //locker?
+            foreach (User user in users_list)
             {
-                foreach (User user in users_list)
+                if (user != currentClient)
                 {
-                    if (user != currentClient)
-                    {
-                        NetworkStream stream = user.Client.GetStream();
-                        stream.Write(buffer, 0, buffer.Length);
-                    }
+                    ServerWrite(message, user.Client);
                 }
             }
+            
         }
 
         public static void RetrieveHistory(User user)
         {
             if (loginHistory.ContainsKey(user.Username))
             {
+                Console.WriteLine("INVOKE history");
                 DateTime lastLogin = loginHistory[user.Username];
-                NetworkStream stream = user.Client.GetStream();
                 for (int i = 0; i < message_list.Count; i++)
                 {
                     int comparison = DateTime.Compare(lastLogin, message_list[i].Time);
                     if (comparison < 0)
                     {
                         Console.WriteLine(message_list[i]);
-                        byte[] buffer = Encoding.ASCII.GetBytes(message_list[i].Time + "];[" + message_list[i].Username + "];[" + message_list[i].CurrentMessage + Environment.NewLine);
-                        stream.Write(buffer, 0, buffer.Length);
+                        string message = (message_list[i].Time + "];[" + message_list[i].Username + "];[" + message_list[i].CurrentMessage + Environment.NewLine);
+                        ServerWrite(message, user.Client);
                     }
                 }
             }
         }
 
-        public static void ServerWrite(string message, NetworkStream stream)
+        public static void UserDisconnect(User currentUser)
+        {
+            lock (locker) users_list.Remove(currentUser);
+
+            if (loginHistory.ContainsKey(currentUser.Username))
+            {
+                loginHistory[currentUser.Username] = DateTime.Now;
+            }
+            else
+            {
+                loginHistory.Add(currentUser.Username, DateTime.Now);
+            }
+
+            Console.WriteLine("User " + currentUser.Username + " disconnected");
+            ServerWriteALL("!!USER " + currentUser.Username + " DISCONNECTED!!");
+
+            currentUser.Client.Client.Shutdown(SocketShutdown.Both);
+            currentUser.Client.Close();
+        }
+
+
+        public static void ServerWrite(string message, TcpClient client)
+        {
+            sw = new StreamWriter(client.GetStream(), Encoding.UTF8);
+            try
+            {
+                sw.WriteLine(message + Environment.NewLine);
+                sw.Flush();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No active stream found!");
+                Console.WriteLine(e.Message);
+            }
+
+        }
+
+        public static void ServerWriteALL(string message)
         {
             try
             {
-                byte[] serverByte = Encoding.UTF8.GetBytes(message);
-                stream.Write(serverByte);
+                foreach (User user in users_list)
+                {
+                    sw = new StreamWriter(user.Client.GetStream(), Encoding.UTF8);
+                    sw.WriteLine(message + Environment.NewLine);
+                    sw.Flush();
+                }
             }
-            catch (IOException e)
-            {
-                Console.WriteLine("No active stream found!");
-                Console.WriteLine(e.Message);
-            }
-            catch (ObjectDisposedException e)
+            catch (Exception e)
             {
                 Console.WriteLine("No active stream found!");
                 Console.WriteLine(e.Message);
             }
         }
 
-        public static void ServerWriteALL(string message, NetworkStream stream)
+        public static void ServerCommands(string message, User user)
         {
-            //TODO -> write to all users a message
-        }
+            Console.WriteLine("invoke method");
+            switch (message)
+            {
+                case "!quit":
+                    Console.WriteLine("Invoke");
+                    UserDisconnect(user);
+                    break;
 
-        public static void ServerCommands()
-        {
-            //TODO -> accept user commands to handle on server side
+                default:
+                    ServerWrite("No command found", user.Client);
+                    break;
+            }
         }
     }
 }

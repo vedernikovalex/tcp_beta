@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using System.Configuration;
 using CipherOTP;
+using System.Text.RegularExpressions;
 
 namespace Client
 {
@@ -14,12 +15,15 @@ namespace Client
         static void Main(string[] args)
         {
             TcpClient tcpClient = new TcpClient();
-            Tuple<string, int> messages;
+            List<string> messages = new List<string>();
+
             try
             {
                 tcpClient.Connect(ip_address, port);
+                StreamWriter sw = new StreamWriter(tcpClient.GetStream(), Encoding.UTF8);
                 Console.WriteLine("Server found!");
                 Console.WriteLine("Connected to "+ip_address+ " with port "+port+"!");
+
                 NetworkStream ns = tcpClient.GetStream();
 
                 Thread thread = new Thread(o => Receiver.ReceiveData((TcpClient)o));
@@ -28,15 +32,8 @@ namespace Client
                 string s;
                 while (!string.IsNullOrEmpty(s = Console.ReadLine()))
                 {
-                    if (!username)
-                    {
-                        byte[] usernameBuffer = Encoding.ASCII.GetBytes(s);
-                        ns.Write(usernameBuffer, 0, usernameBuffer.Length);
-                        username = true;
-                    }
                     try
                     {
-                        //if (Regex.IsMatch(s, "^[a-zA-Z]"))
                         //TODO -> find a way to simulate network failure
                         if (s == "DROP")
                         {
@@ -51,10 +48,24 @@ namespace Client
                             tcpClient.Close();
                             Console.ReadKey();
                         }
-                        (string message, int pointer) = Crypt.EncryptXOR(s);
 
-                        byte[] buffer = Encoding.ASCII.GetBytes(message + "];[" + pointer);
-                        ns.Write(buffer, 0, buffer.Length);
+                        if (!username)
+                        {
+                            sw.WriteLine(s);
+                            sw.Flush();
+                            username = true;
+                            //todo WRONG -> make encryption on serverside
+                        }
+
+                        (string message, int pointer) = Crypt.EncryptXOR(s);
+                        messages.Append(message + "];[" + pointer);
+
+                        sw.WriteLine(message + "];[" + pointer);
+                        sw.Flush();
+                        messages.Clear();
+
+                        //byte[] buffer = Encoding.ASCII.GetBytes(message + "];[" + pointer);
+                        //ns.Write(buffer, 0, buffer.Length);
   
                     }
                     catch (IndexOutOfRangeException e)
@@ -63,11 +74,11 @@ namespace Client
                     }
 
                 }
+                Console.WriteLine("disconnected");
                 tcpClient.Client.Shutdown(SocketShutdown.Send);
                 thread.Join();
                 ns.Close();
                 tcpClient.Close();
-                Console.ReadKey();
             }
             catch (SocketException e)
             {
