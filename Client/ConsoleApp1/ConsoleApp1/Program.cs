@@ -10,63 +10,30 @@ namespace Client
     {
         static string ip_address = ConfigurationManager.AppSettings.Get("ipAddress");
         static int port = Int32.Parse(ConfigurationManager.AppSettings.Get("port"));
-        static bool username = false;
 
         static void Main(string[] args)
         {
             TcpClient tcpClient = new TcpClient();
-            List<string> messages = new List<string>();
+            //List<string> messages = new List<string>();
 
             try
             {
                 tcpClient.Connect(ip_address, port);
-                StreamWriter sw = new StreamWriter(tcpClient.GetStream(), Encoding.UTF8);
                 Console.WriteLine("Server found!");
-                Console.WriteLine("Connected to "+ip_address+ " with port "+port+"!");
+                Console.WriteLine("Connected to " + ip_address + " with port " + port + "!");
 
                 NetworkStream ns = tcpClient.GetStream();
 
-                Thread thread = new Thread(o => Receiver.ReceiveData((TcpClient)o));
+                Thread thread = new Thread(o => Functions.ReceiveData((TcpClient)o));
                 thread.Start(tcpClient);
 
-                string s;
-                while (!string.IsNullOrEmpty(s = Console.ReadLine()))
+                string input;
+                while (!string.IsNullOrEmpty(input = Console.ReadLine()))
                 {
                     try
                     {
-                        //TODO -> find a way to simulate network failure
-                        if (s == "DROP")
-                        {
-                            Console.WriteLine("string");
-                            NetworkController.Disable();
-                        }
-                        if (s == ":q")
-                        {
-                            tcpClient.Client.Shutdown(SocketShutdown.Send);
-                            thread.Join();
-                            ns.Close();
-                            tcpClient.Close();
-                            Console.ReadKey();
-                        }
-
-                        if (!username)
-                        {
-                            sw.WriteLine(s);
-                            sw.Flush();
-                            username = true;
-                            //todo WRONG -> make encryption on serverside
-                        }
-
-                        (string message, int pointer) = Crypt.EncryptXOR(s);
-                        messages.Append(message + "];[" + pointer);
-
-                        sw.WriteLine(message + "];[" + pointer);
-                        sw.Flush();
-                        messages.Clear();
-
-                        //byte[] buffer = Encoding.ASCII.GetBytes(message + "];[" + pointer);
-                        //ns.Write(buffer, 0, buffer.Length);
-  
+                        Console.WriteLine("");
+                        Functions.Write(input, tcpClient);
                     }
                     catch (IndexOutOfRangeException e)
                     {
@@ -74,16 +41,28 @@ namespace Client
                     }
 
                 }
-                Console.WriteLine("disconnected");
-                tcpClient.Client.Shutdown(SocketShutdown.Send);
+                if (tcpClient.Connected)
+                {
+                    Console.WriteLine("Disconnected...");
+                    tcpClient.Client.Shutdown(SocketShutdown.Send);
+                    tcpClient.Close();
+                }
                 thread.Join();
                 ns.Close();
-                tcpClient.Close();
+                Console.WriteLine("Press any key to exit");
+                Console.ReadKey();
             }
             catch (SocketException e)
             {
-                Console.WriteLine("server could not be found!");
-                //TODO actions
+                Console.WriteLine("Server could not be found!");
+                Console.WriteLine("Server ip '" + ip_address + "' with port '" + port + "'");
+                Console.WriteLine("Press any key to exit");
+                Console.ReadKey();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unknown exception occured!");
+                Console.WriteLine(e);
             }
         }
     }

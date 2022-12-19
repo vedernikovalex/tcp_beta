@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "NvycxOkiA/0dmx9jyVaBGBc8G1NxvpylD0H6Q4uhWnDgvXVUVo68x1gZU+MCep/Yi6s2MstuRSgHULy7sMBkIQ==",
+  "dgSpecHash": "oIQdXPkJjXNwejgXfnsSAtDxNx3sVt57nrHfmOan0pscpJeLq35DUPtUIm6Rk57FNwUVOWEOR6MNFcsbB08Bfw==",
   "success": true,
   "projectFilePath": "D:\\Git\\C#\\repos\\tcp_beta\\Tcp_Beta\\TCP_Beta\\TCP_Beta.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\htmlagilitypack\\1.11.46\\htmlagilitypack.1.11.46.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.win32.systemevents\\7.0.0\\microsoft.win32.systemevents.7.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\system.configuration.configurationmanager\\7.0.0\\system.configuration.configurationmanager.7.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\system.drawing.common\\7.0.0\\system.drawing.common.7.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\system.security.cryptography.protecteddata\\7.0.0\\system.security.cryptography.protecteddata.7.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\system.security.permissions\\7.0.0\\system.security.permissions.7.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

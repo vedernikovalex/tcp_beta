@@ -91,7 +91,6 @@ D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\bin\Debug\net6.0\runtime
 D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\bin\Debug\net6.0\CipherOTP.dll
 D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\bin\Debug\net6.0\CipherOTP.pdb
-D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\obj\Debug\net6.0\Client.csproj.AssemblyReference.cache
 D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\obj\Debug\net6.0\Client.GeneratedMSBuildEditorConfig.editorconfig
 D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\obj\Debug\net6.0\Client.csproj.CoreCompileInputs.cache
 D:\Git\C#\repos\tcp_beta\Client\ConsoleApp1\ConsoleApp1\obj\Debug\net6.0\Client.csproj.CopyComplete

@@ -12,8 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="CipherOTP">
-      <HintPath>..\..\Client\ConsoleApp1\ConsoleApp1\CipherOTP\CipherOTP\bin\Debug\net6.0\CipherOTP.dll</HintPath>
+      <HintPath>..\..\CipherOTP\CipherOTP\bin\Debug\net6.0\CipherOTP.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

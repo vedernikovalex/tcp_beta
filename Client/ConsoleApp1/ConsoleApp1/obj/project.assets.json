@@ -149,20 +149,6 @@
             "rid": "win"
           }
         }
-      },
-      "CipherOTP/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "HtmlAgilityPack": "1.11.46",
-          "System.Configuration.ConfigurationManager": "7.0.0"
-        },
-        "compile": {
-          "bin/placeholder/CipherOTP.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/CipherOTP.dll": {}
-        }
       }
     }
   },
@@ -451,16 +437,10 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
-    },
-    "CipherOTP/1.0.0": {
-      "type": "project",
-      "path": "CipherOTP/CipherOTP/CipherOTP.csproj",
-      "msbuildProject": "CipherOTP/CipherOTP/CipherOTP.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "CipherOTP >= 1.0.0",
       "HtmlAgilityPack >= 1.11.46",
       "System.Configuration.ConfigurationManager >= 7.0.0",
       "System.Management >= 7.0.0"
@@ -492,11 +472,7 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {
-            "D:\\Git\\C#\\repos\\tcp_beta\\Client\\ConsoleApp1\\ConsoleApp1\\CipherOTP\\CipherOTP\\CipherOTP.csproj": {
-              "projectPath": "D:\\Git\\C#\\repos\\tcp_beta\\Client\\ConsoleApp1\\ConsoleApp1\\CipherOTP\\CipherOTP\\CipherOTP.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
