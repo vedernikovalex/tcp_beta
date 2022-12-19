@@ -11,8 +11,8 @@ namespace CipherOTP
         static HtmlWeb website = new HtmlWeb();
         static HtmlDocument document = website.Load(url);
 
-        //static string main_key = document.DocumentNode.OuterHtml;
-        static string main_key = "AKJLSDHKSHDiuheirwrufkjvbc3824729480914pjlafm<<D>?<?<!@#)*(!%&*kdjhfjslslkajsdlaskjd;alsdkals;djasl;dkajsl;dajsdhifvbjkxzbcvbzjkxcvbkajdhfgsdkflghsdfklgsjdhfgslkdfjgdshflgkjsdhjf";
+        static string main_key = document.DocumentNode.OuterHtml;
+        //static string main_key = "AKJLSDHKSHDiuheirwrufkjvbc3824729480914pjlafm<<D>?<?<!@#)*(!%&*kdjhfjslslkajsdlaskjd;alsdkals;djasl;dkajsl;dajsdhifvbjkxzbcvbzjkxcvbkajdhfgsdkflghsdfklgsjdhfgslkdfjgdshflgkjsdhjf";
 
         /// <summary>
         /// Encrypts message by generating random pointer to key with OTP cipher

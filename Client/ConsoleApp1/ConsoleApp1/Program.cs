@@ -32,7 +32,6 @@ namespace Client
                 {
                     try
                     {
-                        Console.WriteLine("");
                         Functions.Write(input, tcpClient);
                     }
                     catch (IndexOutOfRangeException e)

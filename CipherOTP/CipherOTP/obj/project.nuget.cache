@@ -1,16 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "Ot24+R5VB54z4GpA0He8oTxGOQb6+9rWqDT9kgl1qf+RZ4GPvm8ox/UOh4C4v2qMZPLyAo0AZJSK3iU4YkcfUQ==",
+  "dgSpecHash": "mbEa3hvwldLeNS8pK3/laEqTD7qiH5NadRtSwns1DfeKkB7QNUW0fXCh2vdD7mnG1tHdiPFefjyLLavlD2gARg==",
   "success": true,
-  "projectFilePath": "D:\\Git\\C#\\repos\\tcp_beta\\CipherOTP\\CipherOTP\\CipherOTP.csproj",
+  "projectFilePath": "/Users/admin/vs2022/repos/tcp_beta/CipherOTP/CipherOTP/CipherOTP.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\user\\.nuget\\packages\\htmlagilitypack\\1.11.46\\htmlagilitypack.1.11.46.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\microsoft.win32.systemevents\\7.0.0\\microsoft.win32.systemevents.7.0.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\system.configuration.configurationmanager\\7.0.0\\system.configuration.configurationmanager.7.0.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\system.drawing.common\\7.0.0\\system.drawing.common.7.0.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\system.security.cryptography.protecteddata\\7.0.0\\system.security.cryptography.protecteddata.7.0.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\system.security.permissions\\7.0.0\\system.security.permissions.7.0.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512"
+    "/Users/admin/.nuget/packages/htmlagilitypack/1.11.46/htmlagilitypack.1.11.46.nupkg.sha512",
+    "/Users/admin/.nuget/packages/microsoft.win32.systemevents/7.0.0/microsoft.win32.systemevents.7.0.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/system.configuration.configurationmanager/7.0.0/system.configuration.configurationmanager.7.0.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/system.drawing.common/7.0.0/system.drawing.common.7.0.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/system.security.cryptography.protecteddata/7.0.0/system.security.cryptography.protecteddata.7.0.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/system.security.permissions/7.0.0/system.security.permissions.7.0.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/system.windows.extensions/7.0.0/system.windows.extensions.7.0.0.nupkg.sha512"
   ],
   "logs": []
 }

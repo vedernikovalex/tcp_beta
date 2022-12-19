@@ -1,10 +1,23 @@
 ﻿<Properties StartupConfiguration="Multiple Projects">
+  <MonoDevelop.Ide.ItemProperties.Client PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints />
+  <DisabledProjects>
+    <String>ConsoleApp1/CipherOTP/CipherOTP/CipherOTP.csproj</String>
+  </DisabledProjects>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations>
+    <MultiItemSolutionRunConfiguration Id="Multiple Projects" Name="Multiple Projects">
+      <Items>
+        <StartupItem ItemId="{B3072E4F-C533-4E2E-954E-8D15C5B6BFD9}" ItemName="Client" ConfigurationId="Default" />
+      </Items>
+    </MultiItemSolutionRunConfiguration>
+  </MultiItemStartupConfigurations>
   <MonoDevelop.Ide.Workbench ActiveDocument="ConsoleApp1/Program.cs">
     <Files>
-      <File FileName="ConsoleApp1/Receiver.cs" Line="30" Column="1" />
-      <File FileName="ConsoleApp1/Program.cs" Line="18" Column="40" />
-      <File FileName="ConsoleApp1/Crypt.cs" Line="7" Column="23" />
-      <File FileName="ConsoleApp1/app.config" Line="1" Column="1" />
+      <File FileName="ConsoleApp1/Receiver.cs" />
+      <File FileName="ConsoleApp1/Program.cs" Line="22" Column="10" />
+      <File FileName="ConsoleApp1/Crypt.cs" />
+      <File FileName="ConsoleApp1/app.config" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,17 +31,5 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Client PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MultiItemStartupConfigurations>
-    <MultiItemSolutionRunConfiguration Id="Multiple Projects" Name="Multiple Projects">
-      <Items>
-        <StartupItem ItemId="{B3072E4F-C533-4E2E-954E-8D15C5B6BFD9}" ItemName="Client" ConfigurationId="Default" />
-      </Items>
-    </MultiItemSolutionRunConfiguration>
-  </MultiItemStartupConfigurations>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

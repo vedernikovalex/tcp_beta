@@ -6,6 +6,9 @@ namespace TCP_Beta
 {
     class Program
     {
+        /// <summary>
+        /// Boolean for server activity
+        /// </summary>
         static bool isRunning;
 
         static void Main(string[] args)
@@ -14,7 +17,7 @@ namespace TCP_Beta
             server.Start();
             isRunning = true;
             Console.WriteLine("Server is running");
-
+            
             while (isRunning)
             {
                 TcpClient client = server.AcceptTcpClient();
@@ -37,6 +40,8 @@ namespace TCP_Beta
                     if (currentUser != null)
                     {
                         Console.WriteLine("User " + currentUser.Username + " just connected!");
+                        DataHandle.ServerWrite("!! Type '!help' for server commands !!",currentUser.Client);
+                        DataHandle.ServerWrite(" ", currentUser.Client);
                         DataHandle.ServerWriteALL("User " + currentUser.Username + " just connected!\n");
                         Thread thread = new Thread(DataHandle.HandleData);
                         //Thread timeout = new Thread(TimeOut);

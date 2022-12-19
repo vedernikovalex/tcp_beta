@@ -6,10 +6,19 @@ using CipherOTP;
 
 namespace Client
 {
+    /// <summary>
+    /// Class that contains all main function used in TCP Client
+    /// </summary>
     public static class Functions
     {
         static StreamReader sr;
         static StreamWriter sw;
+
+        /// <summary>
+        /// Sents message to server with given TCP Client
+        /// </summary>
+        /// <param name="input"> Message to send </param>
+        /// <param name="client"> Current TCP Client </param>
         public static void Write(string input, TcpClient client)
         {
             sw = new StreamWriter(client.GetStream(), Encoding.ASCII);
@@ -18,6 +27,11 @@ namespace Client
             sw.Flush();
         }
 
+        /// <summary>
+        /// Reciever that listens to incoming data using TCP Client with StreamReader
+        /// Reads and decrypts information if crypted
+        /// </summary>
+        /// <param name="client"> Current TCP Client of client </param>
         public static void ReceiveData(TcpClient client)
         {
             sr = new StreamReader(client.GetStream(), Encoding.ASCII);
@@ -27,16 +41,17 @@ namespace Client
                 while ((message = sr.ReadLine()) != null)
                 {
 
-                    //TODO rewrite ecnryption to server side
                     if (Regex.IsMatch(message, "\\];\\["))
                     {
                         string[] message_key = message.Split("];[");
-                        //TODO error on index
+
                         string decryptResult = Crypt.DecryptXOR(message_key[2], Int32.Parse(message_key[3]));
+
                         Console.WriteLine(message_key[0] + " | " + message_key[1] + " ~ " + decryptResult);
                     }
                     else
                     {
+                        Console.WriteLine("");
                         Console.Write(message);
                     }
                 }
