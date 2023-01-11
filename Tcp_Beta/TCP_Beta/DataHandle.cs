@@ -50,10 +50,12 @@ namespace TCP_Beta
             {
                 string username = String.Empty;
                 bool taken = false;
+                sw = new StreamWriter(client.GetStream(), Encoding.UTF8);
                 while (username == String.Empty)
                 {
                     User user = new User(null, client);
-                    user.ServerWrite("USERNAME? ~ ");
+                    sw.WriteLine("USERNAME? ~ ");
+                    sw.Flush();
                     sr = new StreamReader(stream);
                     username = sr.ReadLine();
 
@@ -63,14 +65,16 @@ namespace TCP_Beta
                     }
                     else
                     {
-                        user.ServerWrite("!!USERNAME CANNOT BE EMPTY!!");
+                        sw.WriteLine("!!USERNAME CANNOT BE EMPTY!!");
+                        sw.Flush();
                         username = String.Empty;
                     }
                     for (int i = 0; i < users_list.Count; i++)
                     {
                         if (users_list[i].Username == username && taken == false)
                         {
-                            user.ServerWrite("!!USER ALREADY EXISTS ON THIS SERVER!!");
+                            sw.WriteLine("!!USER ALREADY EXISTS ON THIS SERVER!!");
+                            sw.Flush();
                             taken = true;
                             username = String.Empty;
                         }
@@ -113,6 +117,7 @@ namespace TCP_Beta
                 {
                     sr = new StreamReader(client.GetStream());
                     string message = sr.ReadLine();
+                    Console.WriteLine(message);
 
                     if (message != null)
                     {
@@ -156,13 +161,14 @@ namespace TCP_Beta
         {
             string message = (DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + "];[" + username + "];[" + data + Environment.NewLine);
             lock (locker) message_list.Add(new Message(DateTime.Now, username, data));
-
+            sw = new StreamWriter(currentClient.Client.GetStream(), Encoding.UTF8);
             //locker?
             foreach (User user in users_list)
             {
                 if (user != currentClient)
                 {
-                    user.ServerWrite(message);
+                    sw.WriteLine(message);
+                    sw.Flush();
                 }
             }
 
@@ -186,11 +192,13 @@ namespace TCP_Beta
                         for (int i = 0; i < message_list.Count; i++)
                         {
                             int comparison = DateTime.Compare(lastLogin, message_list[i].Time);
+                            sw = new StreamWriter(user.Client.GetStream(), Encoding.UTF8);
                             if (comparison < 0)
                             {
                                 Console.WriteLine(message_list[i]);
                                 string message = (message_list[i].Time + "];[" + message_list[i].Username + "];[" + message_list[i].CurrentMessage + Environment.NewLine);
-                                user.ServerWrite(message);
+                                sw.WriteLine(message);
+                                sw.Flush();
                             }
                         }
                     }
@@ -211,6 +219,7 @@ namespace TCP_Beta
         public static void UserDisconnect(User currentUser)
         {
             lock (locker) users_list.Remove(currentUser);
+            sw = new StreamWriter(currentUser.Client.GetStream(), Encoding.UTF8);
 
             if (loginHistory.ContainsKey(currentUser.Username))
             {
@@ -222,7 +231,8 @@ namespace TCP_Beta
             }
 
             Console.WriteLine("User " + currentUser.Username + " disconnected");
-            currentUser.ServerWrite("Disconnected by server command");
+            sw.WriteLine("Disconnected by server command");
+            sw.Flush();
             ServerWriteALL("!!USER " + currentUser.Username + " DISCONNECTED!!");
 
             currentUser.Client.Client.Shutdown(SocketShutdown.Both);
@@ -236,7 +246,7 @@ namespace TCP_Beta
         /// <param name="client"> Users TCP Client </param>
         public static void ServerWrite(string message, TcpClient client)
         {
-            sw = new StreamWriter(client.GetStream(), Encoding.ASCII);
+            sw = new StreamWriter(client.GetStream(), Encoding.UTF8);
             try
             {
                 sw.WriteLine(message + Environment.NewLine);
@@ -260,7 +270,7 @@ namespace TCP_Beta
             {
                 foreach (User user in users_list)
                 {
-                    sw = new StreamWriter(user.Client.GetStream(), Encoding.ASCII);
+                    sw = new StreamWriter(user.Client.GetStream(), Encoding.UTF8);
                     sw.WriteLine(message + Environment.NewLine);
                     sw.Flush();
                 }
@@ -280,16 +290,19 @@ namespace TCP_Beta
         /// <param name="user"> Current user </param>
         public static void ServerCommands(string message, User user)
         {
+            sw = new StreamWriter(user.Client.GetStream(), Encoding.UTF8);
             switch (message)
             {
                 case "!quit":
                     UserDisconnect(user);
                     break;
                 case "!help":
-                    user.ServerWrite("!quit - disconnect from server");
+                    sw.WriteLine("!quit - disconnect from server");
+                    sw.Flush();
                     break;
                 default:
-                    user.ServerWrite("No command found");
+                    sw.WriteLine("No command found");
+                    sw.Flush();
                     break;
             }
         }

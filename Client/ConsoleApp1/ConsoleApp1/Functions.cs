@@ -21,7 +21,7 @@ namespace Client
         /// <param name="client"> Current TCP Client </param>
         public static void Write(string input, TcpClient client)
         {
-            sw = new StreamWriter(client.GetStream(), Encoding.ASCII);
+            sw = new StreamWriter(client.GetStream(), Encoding.UTF8);
             (string message, int pointer) = Crypt.EncryptXOR(input);
             sw.WriteLine(message + "];[" + pointer);
             sw.Flush();
@@ -34,7 +34,7 @@ namespace Client
         /// <param name="client"> Current TCP Client of client </param>
         public static void ReceiveData(TcpClient client)
         {
-            sr = new StreamReader(client.GetStream(), Encoding.ASCII);
+            sr = new StreamReader(client.GetStream(), Encoding.UTF8);
             string message;
             try
             {
